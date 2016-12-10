@@ -1,5 +1,5 @@
 {
-  "name": "webcam",
+  "name": "printcam",
   "version": "0.0.0",
   "description": "Webcam proxy and interface",
   "main": "server.js",
@@ -8,8 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@lab.isozilla.com:cameron/webcam.git"
+    "url": "git@lab.isozilla.com:cameron/printcam.git"
   },
   "author": "Cameron Tacklind <cameron@tacklind.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mjpeg-proxy": "^0.2.0",
+    "server-starter": "^1.2.3"
+  }
 }
