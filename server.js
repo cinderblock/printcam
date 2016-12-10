@@ -34,6 +34,10 @@ var config = {
  socketMode: 0707,
 };
 
-serverStarter(server, config, addr => {
- console.log(addr);
+serverStarter(server, config, (err, info, extra) => {
+  if (err) {
+    console.log(err, info, extra);
+  } else {
+    console.log('Listening:', info);
+  }
 });
