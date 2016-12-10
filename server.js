@@ -14,7 +14,7 @@ app.get('/snap', proxy.snapshot || ((req, res) => {
 }));
 
 app.get('/numberClients', (req, res) => {
-  res.send(proxy.audienceResponses.length);
+  res.send('' + proxy.audienceResponses.length);
 });
 
 var config = {
