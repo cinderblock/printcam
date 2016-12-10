@@ -17,6 +17,18 @@ app.get('/numberClients', (req, res) => {
   res.send('' + proxy.audienceResponses.length);
 });
 
+app.get('/webcam/', (req, res) => {
+  if (req.query.action == 'snapshot') {
+   res.redirect('/snap');
+   return;
+  }
+  if (req.query.action == 'stream') {
+   res.redirect('/live');
+   return;
+  }
+  res.redirect('/');
+});
+
 var config = {
  listen: 'printcam.socket',
  socketMode: 0707,
