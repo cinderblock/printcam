@@ -17,6 +17,10 @@ app.get('/numberClients', (req, res) => {
   res.send('' + proxy.audienceResponses.length);
 });
 
+app.get('/currentBandwidth', (req, res) => {
+  res.send('' + proxy.latestBytesPerSec);
+});
+
 app.get('/webcam/', (req, res) => {
   if (req.query.action == 'snapshot') {
    res.redirect('/snap');
