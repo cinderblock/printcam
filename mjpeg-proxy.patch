@@ -1,0 +1,60 @@
+--- node_modules.orig/mjpeg-proxy/mjpeg-proxy.js	2015-12-13 19:19:25.000000000 -0800
++++ node_modules/mjpeg-proxy/mjpeg-proxy.js	2016-12-16 19:59:51.132269781 -0800
+@@ -24,6 +24,9 @@
+ 
+ var buffertools = require('buffertools');
+ 
++var MjpegConsumer = require('mjpeg-consumer');
++var Bandwidth = require('stream-bandwidth');
++
+ function extractBoundary(contentType) {
+   var startIndex = contentType.indexOf('boundary=');
+   var endIndex = contentType.indexOf(';', startIndex);
+@@ -50,6 +53,11 @@
+   self.globalMjpegResponse = null;
+   self.mjpegRequest = null;
+ 
++  self.latestFrame = null;
++
++  self.bandwidth = null;
++  self.latestBytesPerSec = null;
++
+   self.proxyRequest = function(req, res) {
+     if (res.socket==null) {
+       return;
+@@ -70,6 +78,18 @@
+         var lastByte1 = null;
+         var lastByte2 = null;
+ 
++	var consumer = new MjpegConsumer();
++
++	self.bandwidth = new Bandwidth();
++
++	self.bandwidth.on('progress', function(data) {
++	  self.latestBytesPerSec = data.bytes;
++	});
++
++	mjpegResponse.pipe(self.bandwidth).pipe(consumer).on('data', function(img) {
++	  self.latestFrame = img;
++	});
++
+         mjpegResponse.on('data', function(chunk) {
+           // Fix CRLF issue on iOS 6+: boundary should be preceded by CRLF.
+           if (lastByte1 != null && lastByte2 != null) {
+@@ -121,6 +141,16 @@
+     }
+   }
+ 
++  self.snapshot = function(req, res) {
++    res.writeHead(200, {
++      'Expires': 'Mon, 01 Jul 1980 00:00:00 GMT',
++      'Cache-Control': 'no-cache, no-store, must-revalidate',
++      'Pragma': 'no-cache',
++      'Content-Type': 'image/jpeg',
++    });
++    res.end(self.latestFrame);
++  };
++
+   self._newClient = function(req, res) {
+     res.writeHead(200, {
+       'Expires': 'Mon, 01 Jul 1980 00:00:00 GMT',
