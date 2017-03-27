@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0",
-    "mjpeg-proxy": "^0.2.0",
+    "mjpeg-proxy": "git+https://github.com/cinderblock/node-mjpeg-proxy.git",
     "server-starter": "^1.2.3"
   }
 }
