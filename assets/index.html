@@ -3,16 +3,33 @@
 <head>
 <title>3D Printer Live Stream</title>
 <meta name="viewport" content="width=1280">
+<script type="text/javascript">
+function update() {
+  var url = 'https://printcam.tomsawyerlabs.com/live';
+  var div = document.getElementById("img");
+  div.style['background-image'] = `url('${url}?`+(new Date().getTime())+"')";
+}
+</script>
 <style>
+body {
+  margin:0;
+  padding:0;
+}
 @media screen {
-    body {
-      background-color: black;
-      margin:0;
-    }
+  body {
+    background-color: black;
   }
+}
+#img {
+  height:100vh;
+  background:url(https://printcam.tomsawyerlabs.com/snap);
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+}
 </style>
 </head>
 <body>
-<img width="1280" src="snap" onClick="this.src = 'live?'+new Date().getTime(); this.title = 'Click to reload';" title="Click for Live" />
+  <div id="img" onClick="update();"/>
 </body>
 </html>
