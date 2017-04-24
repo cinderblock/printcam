@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=1280">
 <script type="text/javascript">
 function update() {
-  var url = 'https://printcam.tomsawyerlabs.com/live';
+  var url = 'live';
   var div = document.getElementById("img");
   div.style['background-image'] = `url('${url}?`+(new Date().getTime())+"')";
 }
@@ -22,7 +22,7 @@ body {
 }
 #img {
   height:100vh;
-  background:url(https://printcam.tomsawyerlabs.com/snap);
+  background:url(snap);
   background-size:contain;
   background-repeat:no-repeat;
   background-position:center;
